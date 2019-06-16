@@ -1,0 +1,63 @@
+/*ripple js styles
+------------------------*/
+
+[data-ripple] {
+    position: relative;
+}
+
+[data-ripple]>.ripple {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: inherit;
+    z-index: inherit;
+}
+
+[data-ripple]>.ripple>.ink {
+    display: block;
+    position: absolute;
+    background: #fefefe;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+    z-index: inherit;
+}
+
+[data-ripple]>.ripple>.ink.animate {
+    -webkit-animation: ripple 0.85s linear;
+    -moz-animation: ripple 0.85s linear;
+    -o-animation: ripple 0.85s linear;
+    -ms-animation: ripple 0.85s linear;
+    animation: ripple 0.85s linear;
+}
+
+@-webkit-keyframes ripple {
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        border-radius: inherit;
+    }
+}
+
+
+/*scale the element to 250% to safely cover the entire link and fade it out*/
+
+@keyframes ripple {
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        border-radius: inherit;
+    }
+}

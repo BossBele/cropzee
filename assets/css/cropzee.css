@@ -1,0 +1,230 @@
+* {
+    outline: none;
+    text-decoration: none;
+    cursor: default;
+}
+body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.image-previewer {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+}
+#cropzee-hidden-canvas {
+    display: none;
+}
+*[data-cropzee=""] {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.cropzee-modal-cover {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(169,169,169,.6);
+    overflow-y: auto;
+}
+.cropzee-cropping-canvas-container {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid dimgray;
+    margin: auto;
+}
+#cropzee-cropping-canvas {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    object-fit: contain;
+}
+.cropzee-modal {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px 20px 20px;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    margin: auto;
+}
+.cropzee-modal-display-container {
+    display: flex;
+    height: 310px;
+    width: 310px;
+    margin: auto;
+    position: relative;
+    outline: 1px solid black;
+    /*box-sizing: border-box;*/
+}
+.cropzee-modal-display {
+    height: calc(100% - 0px);
+    width: calc(100% - 0px);
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-color: dimgray;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transform: rotate(0deg);
+}
+.cropzee-close {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    font-size: 24px;
+    color: dimgray;
+    text-align: center;
+    width: 30px;
+    height: 28px;
+    line-height: 28px;
+    position: relative;
+    right: -20px;
+    user-select: none;
+    border-radius: 10px;
+}
+.cropzee-close:hover {
+    background-color: rgba(169,169,169,.4);
+}
+.cropzee-modal-cropper {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: calc(100% - 0px);
+    width: calc(100% - 0px);
+    background: rgba(0,0,0,.4);
+}
+.cropzee-cropper-outline {
+    height: 100px;
+    width: 100px;
+    outline: 1px dashed rgba(0,0,0,.5);
+    box-sizing: border-box;
+    z-index: 3;
+    cursor: move;
+}
+.cropzee-outline-handle {
+    z-index: 3;
+    background: white;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    box-sizing: border-box;
+}
+#nw-outline-handle {
+    left: -5px;
+    top: -5px;
+}
+#ne-outline-handle{
+    top: -5px;
+    right: -5px;
+}
+#sw-outline-handle{
+    bottom: -5px;
+    left: -5px;
+}
+#se-outline-handle{
+     bottom: -5px;
+    right: -5px;
+}
+#n-outline-handle{
+     top: -5px;
+    left: calc(50% - 5px);
+}
+#s-outline-handle{
+     bottom: -5px;
+    left: calc(50% - 5px);
+}
+#w-outline-handle{
+     left: -5px;
+     top: calc(50% - 5px);
+}
+#e-outline-handle{
+     right: -5px;
+     top: calc(50% - 5px);
+}
+#cropzee-outline-display {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    left: 0px;
+    height: calc(100% - 0px);
+    width: calc(100% - 0px);
+    background-repeat: no-repeat;
+    background-position: fixed;
+    background-size: contain;
+}
+.cropzee-modal-buttons-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin: 5px auto 0 auto;
+    padding: 2px;
+}
+.cropzee-modal-button {
+    display: flex;
+    height: 38px;
+    width: 100%;
+    background-color: white;
+    color: lightseagreen;
+    font-size: 14px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(0);
+    user-select: none;
+}
+.cropzee-modal-button:last-of-type {
+    border: none;
+    border-right: none;
+}
+.cropzee-svg {
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(175deg);
+}
+/* feather icons */
+.feather {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+/* cropzee Mobile */
+@media only screen and (max-width: 640px) {
+    .cropzee-modal-cover {
+        flex-direction: column;
+        padding: 100px 0;
+    }
+    .cropzee-cropping-canvas-container {}
+    .cropzee-modal {
+        width: calc(100% - 2px);
+        padding: 0 5px 8px 5px;
+        min-height: 390px;
+    }
+    .cropzee-modal-buttons-container {
+        max-width: 320px;
+    }
+    .cropzee-close {
+        right: -5px;
+    }
+}
