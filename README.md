@@ -2,8 +2,6 @@
 Load the following supporting libraries on page.
 
 ```
-<!-- custom fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap" rel="stylesheet">
     <!-- cropzee CSS bundle -->
     <link rel="stylesheet" href="assets/css/ripple.css">
     <link rel="stylesheet" href="assets/css/normalize.css">
