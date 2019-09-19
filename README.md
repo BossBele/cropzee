@@ -54,6 +54,7 @@ Create a modal window in which you can resize/rotate/crop the image.
                     <img class="cropzee-svg" src="assets/icons/feather/check-square.svg">
                 </a>
             </div>
+        </div>
     </div>
 ```
 
