@@ -26,7 +26,9 @@ Create file upload box with image preview container which will display final ima
 
 Create a modal window in which you can resize/rotate/crop the image.
 ```
-<!-- Modal content -->
+    <!-- The Modal -->
+    <div id="cropzee-modal-cover" class="cropzee-modal-cover">
+    <!-- Modal content -->
         <div id="cropzee-modal" class="cropzee-modal">
             <div id="cropzee-close" class="cropzee-close">&times;</div>
             <div id="cropzee-modal-display-container" class="cropzee-modal-display-container">
@@ -52,7 +54,7 @@ Create a modal window in which you can resize/rotate/crop the image.
                     <img class="cropzee-svg" src="assets/icons/feather/check-square.svg">
                 </a>
             </div>
-</div>
+    </div>
 ```
 
 Create canvas element to preview the cropped image in the modal.
