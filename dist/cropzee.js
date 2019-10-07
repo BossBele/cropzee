@@ -37,12 +37,15 @@ jQuery.fn.extend({
         if (options.aspectRatio <= 0) {
             options.aspectRatio = null;
         }
+        //
         if (!options.allowedInputs) {
             options.allowedInputs = ['gif','png','jpg','jpeg'];
         }
+        //
         if (!options.imageExtension) {
             options.imageExtension = 'image/jpeg';
         }
+        //         
         if (!options.returnImageMode) {
             options.returnImageMode = 'data-url';
         }
