@@ -39,7 +39,7 @@ After linking *cropzee.js* and jQuery, you can use cropzee like:
 ```
 The ```'#input'``` and ```'#input2'``` in the above code represents an id of any input of ```type=file``` whose picture input is to be cropped and/or captured (```'#my-input'```).
 ### Image Previewing
-In the case where you want to preview the selected image and the cropped image after cropping, add the ```data-cropzee``` attribute on the HTML element you want to preview the image on.
+In the case where you want to preview the selected image and the cropped image after cropping, add the ```data-cropzee``` attribute on the HTML element you want to preview the image on.<br/>
 The ```data-cropzee``` attribute should contain a value equal to the id of the input element to which cropzee is initialized on.
 Based on the initializations above, the following is the way to change elements into cropzee image previewers:
 ```html
@@ -53,9 +53,9 @@ There can be as many image previewers to a specific input as you would like. Als
 ## Options
 | Option  | Explanation | Value Type | Values | Default |
 | ------------- | :-: | :-: | :-: | :-: |
-| allowedInputs | Content Cell | Array of strings | * ```'gif'``` * ```'png'``` * ```'jpg'``` * ```'jpeg'``` | ```['gif','png','jpg','jpeg']``` |
-| imageExtension | Content Cell | String | * ```'image/jpeg'``` * ```'image/png'``` | ```'image/jpeg'``` |
-| returnImageMode | Content Cell | String | * ```'data-url'``` * ```'blob'``` | ```'data-url'``` |
+| allowedInputs | supported input files (by extension names) | Array of strings | * ```'gif'```<br/>* ```'png'```<br/>* ```'jpg'```<br/>* ```'jpeg'``` | ```['gif','png','jpg','jpeg']``` |
+| imageExtension | cropped image file-type (extension) | String | * ```'image/jpeg'```<br/>* ```'image/png'``` | ```'image/jpeg'``` |
+| returnImageMode | image data to be returned, 'blob' for blob object or 'data-url' for dataURL | String | * ```'data-url'```<br/>* ```'blob'``` | ```'data-url'``` |
 ### From Croppr
 | Option  | Explanation | Value Type | Values | Default |
 | ------------- | :-: | :-: | :-: | :-: |
