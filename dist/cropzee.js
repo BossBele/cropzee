@@ -34,9 +34,9 @@ jQuery.fn.extend({
         imageExtension: 'image/jpeg', // cropped image/blob file-type 'image/jpeg' | 'image/png' | any other supported by browser
         returnImageMode: 'data-url', // image data mode, 'blob' for blob object or 'data-url' for dataURL
     }) {
-  		if (options.aspectRatio <= 0) {
-  			options.aspectRatio = null;
-  		}
+        if (options.aspectRatio <= 0) {
+            options.aspectRatio = null;
+        }
         if (!options.allowedInputs) {
             options.allowedInputs = ['gif','png','jpg','jpeg'];
         }
