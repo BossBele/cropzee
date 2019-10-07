@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Cropzee</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- cropzee.js -->
+	<script src="cropzee.js" defer></script>
+	<!--  -->
+	<style>
+		.image-previewer {
+			height: 300px;
+			width: 300px;
+			display: flex;
+			border-radius: 10px;
+			border: 1px solid lightgrey;
+		}
+	</style>
+</head>
+<body>
+	<label for="cropzee-input" class="image-previewer" data-cropzee="cropzee-input"></label>
+	<input id="cropzee-input" type="file" accept="image/*">
+	<button onclick="cropzeeGetImage('cropzee-input')">Get Image (as blob / data-url)</button>
+	<script>
+		$(document).ready(function(){
+			$("#cropzee-input").cropzee({startSize: [85, 85, '%'],});
+		});
+	</script>
+</body>
+</html>

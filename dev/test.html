@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Cropzee</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<!-- light-modal -->
+	<link href="light-modal/dist/css/light-modal.css" rel="stylesheet">
+	<!-- animate.css -->
+	<link href="animate.css/animate.css" rel="stylesheet">
+	<!-- canvas-toBlob.js -->
+	<script src="canvas-toBlob.js/canvas-toBlob.js" defer></script>
+	<!-- FileSaver.js -->
+	<script src="FileSaver.js/dist/FileSaver.js" defer></script>
+	<!-- Croppr.js -->
+	<link href="Croppr.js/dist/croppr.css" rel="stylesheet">
+	<script src="Croppr.js/dist/croppr.js"></script>
+	<!-- cropzee.js -->
+	<script src="cropzee.js" defer></script>
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!--  -->
+	<style>
+		.image-previewer {
+			height: 300px;
+			width: 300px;
+			display: flex;
+			border-radius: 10px;
+			border: 1px solid lightgrey;
+		}
+	</style>
+</head>
+<body>
+	<label for="cropzee-input" class="image-previewer" data-cropzee="cropzee-input"></label>
+	<input id="cropzee-input" type="file" accept="image/*">
+	<button onclick="cropzeeGetImage('cropzee-input')">Get Image (as blob / data-url)</button>
+	<script>
+		$(document).ready(function(){
+			$("#cropzee-input").cropzee({startSize: [85, 85, '%'],});
+		});
+	</script>
+</body>
+</html>
