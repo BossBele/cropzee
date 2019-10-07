@@ -83,5 +83,3 @@ There can be as many image previewers to a specific input as you would like. Als
 - [animate.css](https://github.com/daneden/animate.css)
 - [FileSaver.js](https://github.com/eligrey/FileSaver.js)
 - [canvas-toBlob.js](https://github.com/eligrey/canvas-toBlob.js)
-
-![Tweet](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FBossBele%2Fcropzee)
