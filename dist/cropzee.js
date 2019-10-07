@@ -37,6 +37,15 @@ jQuery.fn.extend({
   		if (options.aspectRatio <= 0) {
   			options.aspectRatio = null;
   		}
+        if (!options.allowedInputs) {
+            options.allowedInputs = ['gif','png','jpg','jpeg'];
+        }
+        if (!options.imageExtension) {
+            options.imageExtension = 'image/jpeg';
+        }
+        if (!options.returnImageMode) {
+            options.returnImageMode = 'data-url';
+        }
         // function to reset input (value) of input, taking in input id
         // resets input value of cropzee input type=file so that same file can be selected twice
         function resetFileInput(id) {
