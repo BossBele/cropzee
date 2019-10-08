@@ -4,13 +4,130 @@
 	<title>Cropzee</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- UIkit CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/css/uikit.min.css">
+	<!-- UIkit JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit-icons.min.js"></script>
 	<!-- cropzee.js -->
 	<script src="https://cdn.jsdelivr.net/gh/BossBele/cropzee@v2.0/dist/cropzee.js" defer></script>
-	<!--  -->
+	<!-- google code-prettify -->
+	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/styles/sunburst.css">
+	<!-- fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Reenie+Beanie">
+	<!-- jQuery throttle-debounce -->
+	<script src="https://cdn.jsdelivr.net/gh/cowboy/jquery-throttle-debounce/jquery.ba-throttle-debounce.js" defer></script>
+	<!-- sanitize.css -->
+	<link href="https://unpkg.com/sanitize.css" rel="stylesheet">
+	<script>
+				$(document).ready(function(){
+					$("#input").cropzee();
+				    $.each($("input[name='enable']"), function(){
+				   		if ($(this).is(":checked")) {
+				   			$(this).closest("div.uk-position-relative").find("textarea").removeAttr("disabled");
+				   		} else {
+				    		$(this).closest("div.uk-position-relative").find("textarea").attr("disabled", "disabled");
+				    	}
+			        });
+				    $("input, select, textarea").on( "keyup change", $.debounce(300, function() {
+				    	destroyPlugin($("#input"));
+					    $.each($("input[name='enable']"), function(){
+					   		if ($(this).is(":checked")) {
+					   			$(this).closest("div.uk-position-relative").find("textarea").removeAttr("disabled");
+					   		} else {
+					    		$(this).closest("div.uk-position-relative").find("textarea").attr("disabled", "disabled");
+					    	}
+				        });
+					    var aspectRatio = "";
+					    $.each($("input[name='aspectRatio']"), function(){
+			                aspectRatio += $(this).val();
+			            });
+					    var maxSize = [];
+					    $.each($("input[name='maxSize'], select[name='maxSize']"), function(){
+			                maxSize.push($(this).val());
+			            });
+			            var minSize = [];
+					    $.each($("input[name='minSize'], select[name='minSize']"), function(){
+			                minSize.push($(this).val());
+			            });
+			            var startSize = [];
+					    $.each($("input[name='startSize'], select[name='startSize']"), function(){
+			                startSize.push($(this).val());
+			            });
+					    var allowedInputs = [];
+			            $.each($("input[name='allowedInputs']:checked"), function(){
+			                allowedInputs.push($(this).val());
+			            });
+			            var imageExtension = "";
+			            $.each($("input[name='imageExtension']:checked"), function(){
+			                imageExtension += $(this).val();
+			            });
+			            var returnImageMode = "";
+			            $.each($("input[name='returnImageMode']:checked"), function(){
+			                returnImageMode += $(this).val();
+			            });
+			            var modalAnimation = "";
+			            $.each($("select[name='modalAnimation']"), function(){
+			                modalAnimation += $(this).val();
+			            });
+			            var onCropStart = null;
+			            $.each($("textarea[name='onCropStart']"), function(){
+			            	if (!$(this).is(":disabled")) {
+			            		onCropStart = $(this).val();
+			            	}
+			            });
+				        var onCropMove = null;
+				        $.each($("textarea[name='onCropMove']"), function(){
+			                if (!$(this).is(":disabled")) {
+				                onCropMove = $(this).val();
+				            }
+			            });
+				        var onCropEnd = null;
+				        $.each($("textarea[name='onCropEnd']"), function(){
+			                if (!$(this).is(":disabled")) {
+				                onCropEnd = $(this).val();
+				            }
+			            });
+				        var onInitialize = null;
+				        $.each($("textarea[name='onInitialize']"), function(){
+				        	if (!$(this).is(":disabled")) {
+				                onInitialize = $(this).val();
+				            }
+			            });
+			            window.options = {
+			            	aspectRatio: aspectRatio,
+					        maxSize: maxSize,
+					        minSize: minSize,
+					        startSize: startSize,
+					        onCropStart: onCropStart,
+					        onCropMove: onCropMove,
+					        onCropEnd: onCropEnd,
+					        onInitialize: onInitialize,
+					        modalAnimation: modalAnimation,
+					        allowedInputs: allowedInputs,
+					        imageExtension: imageExtension,
+					        returnImageMode: returnImageMode,
+			            }
+					    // alert(JSON.stringify(options));
+					    $("#input").cropzee(options);
+					}));
+				});
+				var destroyPlugin = function($elem, eventNamespace) {
+					var isInstantiated  = !! $.data($elem.get(0));
+					if (isInstantiated) {
+						$.removeData($elem.get(0));
+						$elem.off(eventNamespace);
+						$elem.unbind('.' + eventNamespace);
+					}
+				};
+			</script>
 	<style>
+		* {
+			font-family: sans-serif;
+		}
 		.image-previewer {
 			height: 300px;
 			width: 300px;
@@ -18,16 +135,509 @@
 			border-radius: 10px;
 			border: 1px solid lightgrey;
 		}
+		li {
+			font-size: 11px;
+		}
+		.brands {
+			width: 20%;
+			font-size: 14px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.dependencies {
+			font-family: 'Reenie Beanie', cursive;
+			font-size: 28px;
+			text-decoration: none;
+		}
+		textarea {
+			resize: none;
+			min-height: 50px;
+		}
+		pre, code {
+			user-select: all;
+		}
 	</style>
 </head>
-<body>
-	<label for="cropzee-input" class="image-previewer" data-cropzee="cropzee-input"></label>
-	<input id="cropzee-input" type="file" accept="image/*">
-	<button onclick="cropzeeGetImage('cropzee-input')">Get Image (as blob / data-url)</button>
-	<script>
+<body class="uk-section-muted uk-padding-large">
+	<div class="uk-container uk-card uk-card-default uk-overflow-auto uk-padding uk-margin-medium-bottom">
+		<h2 class="uk-h2">Installation</h2>
+		<pre class="prettyprint">&lt;script src=&quot;https://cdn.jsdelivr.net/gh/BossBele/cropzee@latest/dist/cropzee.js&quot; defer&gt;&lt;/script&gt;</pre>
+	</div>
+	<!--  -->
+	<div class="uk-container uk-card uk-card-default uk-overflow-auto uk-padding uk-margin-medium-bottom">
+		<h2 class="uk-h2">Usage</h2>
+		<pre class="prettyprint">
 		$(document).ready(function(){
-			$("#cropzee-input").cropzee({startSize: [85, 85, '%'],});
-		});
-	</script>
+		    $("#input").cropzee();
+		});</pre>
+		<h3>Image Previewing</h3>
+		<p>Add <code>data-cropzee="inputID"</code> (<code>data-cropzee</code> attribute with value corresponding to the id of the input on which cropzee is initialized).</p>
+	</div>
+	<!--  -->
+	<div class="uk-container uk-card uk-card-default uk-padding uk-margin-medium-bottom">
+		<div class="uk-grid uk-child-width-1-3">
+			<div>
+				<label for="input" class="image-previewer" data-cropzee="input"></label>
+				<input id="input" type="file" accept="image/*">
+				<button onclick="alert(cropzeeGetImage('input'))">Get Image (as blob / data-url)</button>
+			</div>
+			<div>
+				<form class="uk-form-stacked">
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>aspectRatio:</label>
+				        <div class="uk-form-controls uk-inline">
+				        	<span class="uk-form-icon">A</span>
+				            <input class="uk-input uk-form-small" type="number" name="aspectRatio" placeholder="1.0">
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>maxSize:</label>
+				        <div class="uk-form-controls uk-child-width-1-4">
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">W</span>
+					            <input class="uk-input uk-form-small" name="maxSize" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">H</span>
+					            <input class="uk-input uk-form-small" name="maxSize" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<select class="uk-select uk-form-small" name="maxSize">
+					                <option>px</option>
+					                <option>%</option>
+					            </select>
+				        	</div>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>minSize:</label>
+				        <div class="uk-form-controls uk-child-width-1-4">
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">W</span>
+					            <input class="uk-input uk-form-small" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">H</span>
+					            <input class="uk-input uk-form-small" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<select class="uk-select uk-form-small">
+					                <option>px</option>
+					                <option>%</option>
+					            </select>
+				        	</div>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>startSize:</label>
+				        <div class="uk-form-controls uk-child-width-1-4">
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">W</span>
+					            <input class="uk-input uk-form-small" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<span class="uk-form-icon">H</span>
+					            <input class="uk-input uk-form-small" type="text" placeholder="">
+				        	</div>
+				        	<div class="uk-inline">
+					        	<select class="uk-select uk-form-small">
+					                <option>px</option>
+					                <option>%</option>
+					            </select>
+				        	</div>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>allowedInputs:</label>
+				        <div class="uk-form-controls uk-inline">
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="jpg" checked>jpg
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="png" checked>png
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="jpeg" checked>jpeg
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="gif" checked>gif
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="svg">svg
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="svgz">svgz
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="webp">webp
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="bmp">bmp
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="pjp">pjp
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="pjpeg">pjpeg
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="xbm">xbm
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="tif">tif
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="tiff">tiff
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="ico">ico
+				            </label>&emsp;
+				            <label class="uk-display-inline-block">
+				            	<input class="uk-checkbox" type="checkbox" name="allowedInputs" value="jfif">jfif
+				            </label>&emsp;
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>imageExtension:</label>
+				        <div class="uk-form-controls uk-inline">
+				            <label><input class="uk-radio" type="radio" name="imageExtension" value="image/jpeg" checked> image/jpeg</label>
+				            <label><input class="uk-radio" type="radio" name="imageExtension" value="image/png"> image/png</label>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>returnImageMode:</label>
+				        <div class="uk-form-controls uk-inline">
+				        	<label><input class="uk-radio" type="radio" name="returnImageMode" value="data-url" checked> data-url</label>
+				            <label><input class="uk-radio" type="radio" name="returnImageMode" value="blob"> blob</label>
+				        </div>
+				    </div>
+				</form>
+			</div>
+			<div>
+				<form class="uk-form-stacked">
+					<div class="uk-margin-small-bottom">
+				        <label class="uk-form-label" data-option>modalAnimation:</label>
+				        <div class="uk-form-controls uk-inline">
+				            <select class="uk-select uk-form-small" name="modalAnimation">
+				            	<option value=""></option>
+						        <optgroup label="Attention Seekers">
+						          <option value="bounce">bounce</option>
+						          <option value="flash">flash</option>
+						          <option value="pulse">pulse</option>
+						          <option value="rubberBand">rubberBand</option>
+						          <option value="shake">shake</option>
+						          <option value="swing">swing</option>
+						          <option value="tada">tada</option>
+						          <option value="wobble">wobble</option>
+						          <option value="jello">jello</option>
+						          <option value="heartBeat">heartBeat</option>
+						        </optgroup>
+						        <optgroup label="Bouncing Entrances">
+						          <option value="bounceIn">bounceIn</option>
+						          <option value="bounceInDown">bounceInDown</option>
+						          <option value="bounceInLeft">bounceInLeft</option>
+						          <option value="bounceInRight">bounceInRight</option>
+						          <option value="bounceInUp">bounceInUp</option>
+						        </optgroup>
+						        <optgroup label="Bouncing Exits">
+						          <option value="bounceOut">bounceOut</option>
+						          <option value="bounceOutDown">bounceOutDown</option>
+						          <option value="bounceOutLeft">bounceOutLeft</option>
+						          <option value="bounceOutRight">bounceOutRight</option>
+						          <option value="bounceOutUp">bounceOutUp</option>
+						        </optgroup>
+						        <optgroup label="Fading Entrances">
+						          <option value="fadeIn">fadeIn</option>
+						          <option value="fadeInDown">fadeInDown</option>
+						          <option value="fadeInDownBig">fadeInDownBig</option>
+						          <option value="fadeInLeft">fadeInLeft</option>
+						          <option value="fadeInLeftBig">fadeInLeftBig</option>
+						          <option value="fadeInRight">fadeInRight</option>
+						          <option value="fadeInRightBig">fadeInRightBig</option>
+						          <option value="fadeInUp">fadeInUp</option>
+						          <option value="fadeInUpBig">fadeInUpBig</option>
+						        </optgroup>
+						        <optgroup label="Fading Exits">
+						          <option value="fadeOut">fadeOut</option>
+						          <option value="fadeOutDown">fadeOutDown</option>
+						          <option value="fadeOutDownBig">fadeOutDownBig</option>
+						          <option value="fadeOutLeft">fadeOutLeft</option>
+						          <option value="fadeOutLeftBig">fadeOutLeftBig</option>
+						          <option value="fadeOutRight">fadeOutRight</option>
+						          <option value="fadeOutRightBig">fadeOutRightBig</option>
+						          <option value="fadeOutUp">fadeOutUp</option>
+						          <option value="fadeOutUpBig">fadeOutUpBig</option>
+						        </optgroup>
+						        <optgroup label="Flippers">
+						          <option value="flip">flip</option>
+						          <option value="flipInX">flipInX</option>
+						          <option value="flipInY">flipInY</option>
+						          <option value="flipOutX">flipOutX</option>
+						          <option value="flipOutY">flipOutY</option>
+						        </optgroup>
+						        <optgroup label="Lightspeed">
+						          <option value="lightSpeedIn">lightSpeedIn</option>
+						          <option value="lightSpeedOut">lightSpeedOut</option>
+						        </optgroup>
+						        <optgroup label="Rotating Entrances">
+						          <option value="rotateIn">rotateIn</option>
+						          <option value="rotateInDownLeft">rotateInDownLeft</option>
+						          <option value="rotateInDownRight">rotateInDownRight</option>
+						          <option value="rotateInUpLeft">rotateInUpLeft</option>
+						          <option value="rotateInUpRight">rotateInUpRight</option>
+						        </optgroup>
+						        <optgroup label="Rotating Exits">
+						          <option value="rotateOut">rotateOut</option>
+						          <option value="rotateOutDownLeft">rotateOutDownLeft</option>
+						          <option value="rotateOutDownRight">rotateOutDownRight</option>
+						          <option value="rotateOutUpLeft">rotateOutUpLeft</option>
+						          <option value="rotateOutUpRight">rotateOutUpRight</option>
+						        </optgroup>
+						        <optgroup label="Sliding Entrances">
+						          <option value="slideInUp">slideInUp</option>
+						          <option value="slideInDown">slideInDown</option>
+						          <option value="slideInLeft">slideInLeft</option>
+						          <option value="slideInRight">slideInRight</option>
+						        </optgroup>
+						        <optgroup label="Sliding Exits">
+						          <option value="slideOutUp">slideOutUp</option>
+						          <option value="slideOutDown">slideOutDown</option>
+						          <option value="slideOutLeft">slideOutLeft</option>
+						          <option value="slideOutRight">slideOutRight</option>
+						        </optgroup>
+						        <optgroup label="Zoom Entrances">
+						          <option value="zoomIn">zoomIn</option>
+						          <option value="zoomInDown">zoomInDown</option>
+						          <option value="zoomInLeft">zoomInLeft</option>
+						          <option value="zoomInRight">zoomInRight</option>
+						          <option value="zoomInUp">zoomInUp</option>
+						        </optgroup>
+						        <optgroup label="Zoom Exits">
+						          <option value="zoomOut">zoomOut</option>
+						          <option value="zoomOutDown">zoomOutDown</option>
+						          <option value="zoomOutLeft">zoomOutLeft</option>
+						          <option value="zoomOutRight">zoomOutRight</option>
+						          <option value="zoomOutUp">zoomOutUp</option>
+						        </optgroup>
+						        <optgroup label="Specials">
+						          <option value="hinge">hinge</option>
+						          <option value="jackInTheBox">jackInTheBox</option>
+						          <option value="rollIn">rollIn</option>
+						          <option value="rollOut">rollOut</option>
+						        </optgroup>
+						    </select>
+				        </div>
+				    </div>
+					<div class="uk-margin-small-bottom uk-position-relative">
+				        <label class="uk-form-label" data-option>onCropStart:</label>
+				        <label class="uk-display-inline-block uk-position-right"><input class="uk-checkbox" type="checkbox" name="enable">Enable</label>
+				        <div class="uk-form-controls">
+				        	<textarea name="onCropStart" class="uk-textarea uk-width-1" readonly>function(data) { alert(JSON.stringify(data.x, data.y, data.width, data.height)); }</textarea>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom uk-position-relative">
+				        <label class="uk-form-label" data-option>onCropMove:</label>
+				        <label class="uk-display-inline-block uk-position-right"><input class="uk-checkbox" type="checkbox" name="enable">Enable</label>
+				        <div class="uk-form-controls">
+				        	<textarea name="onCropMove" class="uk-textarea uk-width-1" readonly>function(data) { alert(JSON.stringify(data.x, data.y, data.width, data.height)); }</textarea>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom uk-position-relative">
+				        <label class="uk-form-label" data-option>onCropEnd:</label>
+				        <label class="uk-display-inline-block uk-position-right"><input class="uk-checkbox" type="checkbox" name="enable">Enable</label>
+				        <div class="uk-form-controls">
+				        	<textarea name="onCropEnd" class="uk-textarea uk-width-1" readonly>function(data) { alert(JSON.stringify(data.x, data.y, data.width, data.height)); }</textarea>
+				        </div>
+				    </div>
+				    <div class="uk-margin-small-bottom uk-position-relative">
+				        <label class="uk-form-label" data-option>onInitialize:</label>
+				        <label class="uk-display-inline-block uk-position-right"><input class="uk-checkbox" type="checkbox" name="enable">Enable</label>
+				        <div class="uk-form-controls">
+				        	<textarea name="onInitialize" class="uk-textarea uk-width-1" readonly>function(instance) { alert(JSON.stringify(instance)); }</textarea>
+				        </div>
+				    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div class="uk-container uk-card uk-card-default uk-overflow-auto uk-padding uk-margin-medium-bottom">
+		<h2 class="uk-h2">Options</h2>
+		<table class="uk-table uk-table-responsive uk-table-hover uk-table-divider uk-table-middle">
+			<thead>
+				<tr>
+					<th>Option</th>
+					<th class="uk-width-medium">Explanation</th>
+					<th>Value Type</th>
+					<th>Values</th>
+					<th>Default</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>allowedInputs</td>
+					<td>supported input files (by extension names)</td>
+					<td>Array of strings</td>
+					<td>
+						<li><code>'gif'</code></li>
+						<li><code>'png'</code></li>
+						<li><code>'jpg'</code></li>
+						<li><code>'jpeg'</code></li>
+						<small><i>*any extension</i></small>
+					</td>
+					<td>
+						<code>['gif','png','jpg','jpeg']</code>
+					</td>
+				</tr>
+				<tr>
+					<td>imageExtension</td>
+					<td>cropped image file-type (extension)</td>
+					<td>String</td>
+					<td>
+						<li><code>'image/jpeg'</code></li>
+						<li><code>'image/png'</code></li>
+					</td>
+					<td><code>'image/jpeg'</code></td>
+				</tr>
+				<tr>
+					<td>returnImageMode</td>
+					<td>image data to be returned, 'blob' for blob object or 'data-url' for dataURL</td>
+					<td>String</td>
+					<td>
+						<li><code>'data-url'</code></li>
+						<li><code>'blob'</code></li>
+					</td>
+					<td><code>'data-url'</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h4 class="uk-h4">From Croppr:</h4>
+		<table class="uk-table uk-table-responsive uk-table-hover uk-table-divider uk-table-middle">
+			<thead>
+				<tr>
+					<th>Option</th>
+					<th class="uk-width-medium">Explanation</th>
+					<th>Value Type</th>
+					<th class="uk-table-shrink">Values</th>
+					<th>Default</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>aspectRatio</td>
+					<td>Constrain the crop region to an aspect ratio.</td>
+					<td>Number</td>
+					<td><code>all positive whole numbers or decimals</code></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>maxSize</td>
+					<td>Constrain the crop region to a maximum size.</td>
+					<td>[width, height, unit?]</td>
+					<td><code>eg [200, 200, 'px'] or [20, 20, '%']</code></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>minSize</td>
+					<td>Constrain the crop region to a minimum size.</td>
+					<td>[width, height, unit?]</td>
+					<td><code>eg [200, 200, 'px'] or [20, 20, '%']</code></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>startSize</td>
+					<td>The starting size of the crop region when it is initialized.</td>
+					<td>[width, height, unit?]</td>
+					<td><code>eg [200, 200, 'px'] or [20, 20, '%']</code></td>
+					<td><code>[100, 100, '%']</code></td>
+				</tr>
+				<tr>
+					<td>onCropStart</td>
+					<td>A callback function that is called when the user starts modifying the crop region.</td>
+					<td>Function</td>
+					<td>eg <pre class="prettyprint lang-js">function(data) { console.log(data.x, data.y, data.width, data.height); }</pre></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>onCropMove</td>
+					<td>A callback function that is called when the crop region changes.</td>
+					<td>Function</td>
+					<td>eg <pre class="prettyprint lang-js">function(data) { console.log(data.x, data.y, data.width, data.height); }</pre></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>onCropEnd</td>
+					<td>A callback function that is called when the user stops modifying the crop region.</td>
+					<td>Function</td>
+					<td>eg <pre class="prettyprint lang-js">function(data) { console.log(data.x, data.y, data.width, data.height); }</pre></td>
+					<td><code>null</code></td>
+				</tr>
+				<tr>
+					<td>onInitialize</td>
+					<td>A callback function that is called when the Croppr instance is fully initialized.</td>
+					<td>Function</td>
+					<td>eg <pre class="prettyprint lang-js">function(instance) { // do things here 
+					}</pre></td>
+					<td><code>null</code></td>
+				</tr>
+			</tbody>
+		</table>
+		<h4 class="uk-h4">From Light Modal:</h4>
+		<table class="uk-table uk-table-responsive uk-table-hover uk-table-divider uk-table-middle">
+			<thead>
+				<tr>
+					<th>Option</th>
+					<th class="uk-width-medium">Explanation</th>
+					<th>Value Type</th>
+					<th>Values</th>
+					<th>Default</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>modalAnimation</td>
+					<td>animate.css animation on modal when opening / showing and closing / hiding</td>
+					<td>String</td>
+					<td><code>eg bounce</code> * use animate.css animation names</td>
+					<td><code>''</code></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--  -->
+	<div class="uk-container uk-card uk-card-default uk-overflow-auto uk-padding uk-margin-medium-bottom">
+		<h2 class="uk-h2">Methods</h2>
+		<table class="uk-table uk-table-responsive uk-table-hover uk-table-divider uk-table-middle">
+			<thead>
+				<tr>
+					<th>Method</th>
+					<th class="uk-width-medium">Explanation</th>
+					<th>Parameter Type</th>
+					<th>Parameter</th>
+					<th>Return</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code class="prettyprint lang-js">cropzeeGetImage(input)</code></td>
+					<td>method to get the cropped or inserted image. cropzee doesn't return the image as the input value</td>
+					<td>String</td>
+					<td>input selector eg <code>'#my-input'</code></td>
+					<td><code>blob</code> or <code>dataURL</code> (depends on returnImageMode option)</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!--  -->
+	<div class="uk-container uk-card uk-card-default uk-overflow-auto uk-padding uk-margin-medium-bottom">
+		<h2 class="uk-h2">Dependencies</h2>
+		<ul class="uk-thumbnav" style="font-size: 0;" uk-margin>
+		    <li class="brands"><a href="https://jamesooi.design/Croppr.js/" target="_blank" rel="noopener noreferrer"><div class="dependencies">Croppr.js</div></a></li>
+		    <li class="brands"><a href="https://daneden.github.io/animate.css/" target="_blank" rel="noopener noreferrer"><div class="dependencies">Animate.css</div></a></li>
+		    <li class="brands"><a href="https://hunzaboy.github.io/Light-Modal/" target="_blank" rel="noopener noreferrer"><div class="dependencies">Light Modal</div></a></li>
+		    <li class="brands"><a href="https://github.com/eligrey/FileSaver.js/" target="_blank" rel="noopener noreferrer"><div class="dependencies">FileSaver.js</div></a></li>
+		    <li class="brands"><a href="https://github.com/eligrey/canvas-toBlob.js/" target="_blank" rel="noopener noreferrer"><div class="dependencies">canvas-toBlob.js</div></a></li>
+		</ul>
+	</div>
 </body>
 </html>
