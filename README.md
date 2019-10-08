@@ -73,7 +73,7 @@ There can be as many image previewers to a specific input as you would like. Als
 | modalAnimation | animate.css animation on modal when opening/showing and closing/hiding | String |  ```eg bounce``` * use animate.css animation names | ```''``` |
 
 ## Methods
-| Option  | Explanation | Parameter Type | Parameter | Return |
+| Method  | Explanation | Parameter Type | Parameter | Return |
 | ------------- | :-: | :-: | :-: | :-: |
 | cropzeeGetImage(input) | method to get the cropped or inserted image. cropzee doesn't return the image as the input value | String |  input selector eg ```'#my-input'``` | ```blob``` or ```dataURL``` (depends on returnImageMode option) |
 
