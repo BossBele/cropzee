@@ -199,7 +199,7 @@ jQuery.fn.extend({
                 ctx.drawImage(img, 0, 0, cropzeeCanvasWidth, cropzeeCanvasHeight);
                 setTimeout(function(){
                     // the css-only modal is called via href see https://hunzaboy.github.io/Light-Modal/#
-                    window.location = window.location.pathname + window.location.search + "#cropzee-modal";
+                    window.location = window.location.href + "#cropzee-modal";
                     // function to trigger croppr.js on picture in modal
                     cropzeeTriggerCroppr();
                 }, 50);
@@ -270,5 +270,5 @@ jQuery.fn.extend({
 // function to close modal
 function closeModal() {
     $('#cropzee-modal').remove();
-    window.location = window.location.pathname + window.location.search + '#';
+    window.location = window.location.href + '#';
 }
